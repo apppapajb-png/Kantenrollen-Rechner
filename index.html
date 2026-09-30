@@ -35,14 +35,14 @@ input{text-align:center;font-size:20px;font-weight:750;color:#10264a;width:100%;
 <main>
 <div class="install"><b>Als App installieren:</b> iPhone: Teilen → „Zum Home-Bildschirm“. Android: Browser-Menü → „App installieren“ / „Zum Startbildschirm“.</div>
 <section class="panel">
-<label>Außendurchmesser (Ø)</label><div class="stepper"><button data-id="outer" data-d="-0.2">−</button><input id="outer" type="number" inputmode="decimal" step="0.2" value="300.00"><button data-id="outer" data-d="0.2">+</button><span class="unit">mm</span></div><div class="hint">Schrittweite: 0,20 mm</div>
-<label>Innendurchmesser (Ø)</label><div class="stepper"><button data-id="inner" data-d="-0.2">−</button><input id="inner" type="number" inputmode="decimal" step="0.2" value="100.00"><button data-id="inner" data-d="0.2">+</button><span class="unit">mm</span></div><div class="hint">Schrittweite: 0,20 mm</div>
+<label>Außendurchmesser (Ø)</label><div class="stepper"><button data-id="outer" data-d="-0.2">−</button><input id="outer" type="number" inputmode="decimal" step="0.2" value=""><button data-id="outer" data-d="0.2">+</button><span class="unit">mm</span></div><div class="hint">Schrittweite: 0,20 mm</div>
+<label>Innendurchmesser (Ø)</label><div class="stepper"><button data-id="inner" data-d="-0.2">−</button><input id="inner" type="number" inputmode="decimal" step="0.2" value=""><button data-id="inner" data-d="0.2">+</button><span class="unit">mm</span></div><div class="hint">Schrittweite: 0,20 mm</div>
 <label>Kantenstärke</label><div class="stepper"><button data-id="thick" data-d="-0.01">−</button><input id="thick" type="number" inputmode="decimal" step="0.01" value="2.00"><button data-id="thick" data-d="0.01">+</button><span class="unit">mm</span></div><div class="hint">Schrittweite: 0,01 mm</div>
 <div class="error" id="error"></div>
 </section>
 <section class="panel">
-<div class="dim" id="outerLabel">Außen-Ø: 300,00 mm</div><div class="roll" id="roll"><div class="hole" id="hole"></div></div><div class="dim" id="innerLabel">Innen-Ø: 100,00 mm</div>
-<div class="resultbox"><small>Geschätzte Restlänge</small><div class="result" id="result">31,42 m</div><small>Anzeige auf 0,01 m</small></div>
+<div class="dim" id="outerLabel">Außen-Ø: -</div><div class="roll" id="roll"><div class="hole" id="hole"></div></div><div class="dim" id="innerLabel">Innen-Ø: -</div>
+<div class="resultbox"><small>Geschätzte Restlänge</small><div class="result" id="result">- m</div><small>Anzeige auf 0,01 m</small></div>
 <div class="actions"><button id="reset">↻ Zurücksetzen</button><button class="primary" id="calculate">▣ Berechnen</button></div>
 </section>
 <p class="note">Die Berechnung erfolgt intern ungerundet nach π × (Außen-Ø² − Innen-Ø²) ÷ (4 × Kantenstärke). Wicklungsdichte, Luftspalte und Materialverformung können die reale Restlänge geringfügig beeinflussen.</p>
@@ -52,7 +52,7 @@ input{text-align:center;font-size:20px;font-weight:750;color:#10264a;width:100%;
 const val=x=>Number(String(x.value).replace(',','.')),fmt=(v,d)=>v.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
 function calc(){let D=val(o),d=val(i),s=val(t);if(![D,d,s].every(Number.isFinite)||D<=0||d<0||s<=0){e.textContent='Bitte gültige Maße eingeben.';r.textContent='— m';return}if(D<=d){e.textContent='Außen-Ø muss größer als Innen-Ø sein.';r.textContent='— m';return}e.textContent='';let m=Math.PI*(D*D-d*d)/(4*s)/1000;r.textContent=fmt(m,2)+' m';$('outerLabel').textContent='Außen-Ø: '+fmt(D,2)+' mm';$('innerLabel').textContent='Innen-Ø: '+fmt(d,2)+' mm';let R=$('roll').clientWidth/2-5,hr=Math.max(12,Math.min(R-8,R*d/D));h.style.width=2*hr+'px';h.style.height=2*hr+'px'}
 document.querySelectorAll('[data-id]').forEach(b=>b.addEventListener('click',()=>{let x=$(b.dataset.id),d=Number(b.dataset.d),n=val(x);if(!Number.isFinite(n))n=0;x.value=(n+d).toFixed(Math.abs(d)<.1?2:1);calc()}));
-[o,i,t].forEach(x=>x.addEventListener('input',calc));$('calculate').addEventListener('click',calc);$('reset').addEventListener('click',()=>{o.value='300.00';i.value='100.00';t.value='2.00';calc()});window.addEventListener('resize',calc);calc();
+[o,i,t].forEach(x=>x.addEventListener('input',calc));$('calculate').addEventListener('click',calc);$('reset').addEventListener('click',()=>{o.value='';i.value='';t.value='2.00';calc()});window.addEventListener('resize',calc);calc();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
 </script>
